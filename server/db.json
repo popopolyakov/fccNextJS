@@ -1,5 +1,11 @@
 {
     "projects": [
-        { "id": 1, "title": "json-server", "author": "typicode" }
+        { "id": 1, "title": "ИЭЭ", "desc": "typicode", "img": "" },
+        { "id": 2, "title": "OmenNuxt", "desc": "typicode", "img": "" },
+        { "id": 3, "title": "FreeCodeCamp 1", "desc": "typicode", "img": "" },
+        { "id": 4, "title": "FreeCodeCamp 2", "desc": "typicode", "img": "" },
+        { "id": 5, "title": "FreeCodeCamp 3", "desc": "typicode", "img": "" },
+        { "id": 6, "title": "FreeCodeCamp 4", "desc": "typicode", "img": "" },
+        { "id": 7, "title": "FreeCodeCamp 5", "desc": "typicode", "img": "" }
     ]
 }
