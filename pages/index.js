@@ -32,7 +32,7 @@ export default function Home() {
             <p>@popopolyakov</p>
         </div>
     </footer>
-    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" />
+    {/* <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" /> */}
     </div>
   )
 }
