@@ -1,8 +1,14 @@
+import { wrapper } from '../redux/store'
+import { NextPage } from "next";
+import { useSelector } from "react-redux";
+import { State } from "../redux/reducers";
 import styles from '../styles/index.module.sass'
-import Projects from '../components/portfolioProjects.tsx'
+import Projects from '../components/portfolioProjects'
+import { GetStaticProps } from 'next'
+import { SET_DEFAULT_PROJECTS } from '../redux/types/types';
 
-export default function Home() {
-
+const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
+  const { app, page, projects } = useSelector<State, State>(state => state);
   return (
     
     <div className={styles.container}>
@@ -19,11 +25,12 @@ export default function Home() {
     </header>
     <main className={styles.main}>
       <section id={styles['welcome-section']}>
-          <div className={styles['welcome-text']}>
-              <h1>Portfolio</h1>
-              <p><br />by Mikhail Polyakov</p>
-          </div>
+        <div className={styles['welcome-text']}>
+          <h1>Portfolio</h1>
+          <p><br />by Mikhail Polyakov</p>
+        </div>
       </section>
+      <pre>{JSON.stringify({ app, page, projects, getStaticProp, appProp }, null, 2)}</pre>
       <Projects />
     </main>
     <footer id={styles.footer}>
@@ -36,3 +43,11 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
+
+export const getStaticProps : GetStaticProps = wrapper.getStaticProps(({ store }) => {
+  store.dispatch({ type: SET_DEFAULT_PROJECTS, payload: "static" });
+  console.log('getStaticProps')
+  return { props: { getStaticProp: "bar" } };
+});

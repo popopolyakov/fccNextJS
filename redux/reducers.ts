@@ -1,6 +1,7 @@
 import { AnyAction } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
-import axios from 'axios'
+import { getProjects } from '../redux/actions/getProjects'
+import {SET_DEFAULT_PROJECTS} from '../redux/types/types'
 
 interface Product {
     id: number | string;
@@ -42,21 +43,12 @@ export const reducer = (
             if (action.payload.page === "init") delete action.payload.page;
             if (action.payload.projects === "init") delete action.payload.projects;
             return { ...state, ...action.payload };
-        case "APP":
-            return { ...state, app: action.payload };
-        case "PAGE":
-            return { ...state, page: action.payload };
-        case 'SET_PROJECTS':
-            return { ...state, projects: action.payload };
+        case SET_DEFAULT_PROJECTS:
+            console.log(getProjects())
+            return { ...state, projects: []};
         default:
             return state;
     }
 };
   
 
-export function fetchItems() {
-    console.log('get items')
-    return dispatch => axios.get('localhost:4300/projects')
-        .then(({ data }) => data)
-        .then(projects => dispatch({ type: 'SET_PROJECTS', projects }));
-}

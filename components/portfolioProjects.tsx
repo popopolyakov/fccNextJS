@@ -9,12 +9,12 @@ interface OtherProps {
     appProp: string;
   }
 
-const Projects: NextPage<OtherProps> = ({ appProp, getStaticProp }) => {
-    const { app, page, projects } = useSelector<State, State>(state => state);
+const Projects: NextPage<any> = () => {
+    
     return (
         <section id={projectsStyle.projects}>
             <h3 className={projectsStyle.projects__title}>Projects</h3>
-            <pre>{JSON.stringify({ app, page, projects, getStaticProp, appProp }, null, 2)}</pre>
+            
             <div className={projectsStyle.projects__container}>
                 <div className={projectsStyle.projects__project}>
                     <img src="https://yt3.ggpht.com/a/AGF-l78g8b0UjpbKjsUSJNrIdRLnmU-I_wVxlGCqRA=s900-c-k-c0xffffffff-no-rj-mo" />
@@ -45,10 +45,10 @@ const Projects: NextPage<OtherProps> = ({ appProp, getStaticProp }) => {
     )
 }
 
-export const getStaticProps = wrapper.getStaticProps(({ store }) => {
-    store.dispatch({ type: "PAGE", payload: "static" });
+/* export const getStaticProps = wrapper.getStaticProps(({ store }) => {
+    store.dispatch({ type: "SET_PROJECTS", payload: "static" });
     console.log('getStaticProps')
     return { props: { getStaticProp: "bar" } };
-});
+}); */
 
 export default Projects
