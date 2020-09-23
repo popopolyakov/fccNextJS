@@ -5,7 +5,7 @@ import { State } from "../redux/reducers";
 import styles from '../styles/index.module.sass'
 import Projects from '../components/portfolioProjects'
 import { GetStaticProps } from 'next'
-import { SET_DEFAULT_PROJECTS } from '../redux/types/types';
+import { getProjects } from '../redux/actions/getProjects';
 
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   const { app, page, projects } = useSelector<State, State>(state => state);
@@ -30,7 +30,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
           <p><br />by Mikhail Polyakov</p>
         </div>
       </section>
-      <pre>{JSON.stringify({ app, page, projects, getStaticProp, appProp }, null, 2)}</pre>
+      <pre>{JSON.stringify({ app, page, projects }, null, 2)}</pre>
       <Projects />
     </main>
     <footer id={styles.footer}>
@@ -46,8 +46,8 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
 
 export default Home
 
-export const getStaticProps : GetStaticProps = wrapper.getStaticProps(({ store }) => {
-  store.dispatch({ type: SET_DEFAULT_PROJECTS, payload: "static" });
-  console.log('getStaticProps')
-  return { props: { getStaticProp: "bar" } };
+export const  getStaticProps : GetStaticProps =  wrapper.getStaticProps(async ({ store }) => {
+  console.log(store.dispatch)
+  await store.dispatch<any>(getProjects())
+  return { props: { store: store.getState() } };
 });
