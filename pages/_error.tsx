@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { NextPage } from "next";
-import { State } from "../redux/reducers";
+import { IState } from "../redux/interfaces";
 
 const Error: NextPage = () => {
-  const app = useSelector<State, State["app"]>(state => state.app);
+  const app = useSelector<IState, IState["app"]>(state => state.app);
   return (
     <>
       <p>
