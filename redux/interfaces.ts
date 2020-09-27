@@ -7,16 +7,24 @@ export interface IProduct {
     src: string;
 }
 
-export interface IProjects {
-    map(arg0: (project: IProduct) => JSX.Element): import("react").ReactNode;
-    [index: number]: IProduct
-}
+
+export interface IProductsArray extends Array<IProduct> {}
 
 export interface IState {
     app: string;
     page: string;
-    projects: string | IProjects;
+    projects: string | IProductsArray;
 }
+
+export const errorProjects: IProductsArray = [
+    {
+        id: 1,
+        title: 'error',
+        img: 'error',
+        desc: 'error',
+        src: 'error'
+    }
+]
 
 export const initialState: IState = {
     app: "init",
@@ -24,10 +32,10 @@ export const initialState: IState = {
     projects: [
         {
             id: 1,
-            title: 'string',
-            img: 'string',
-            desc: 'string',
-            src: 'string'
+            title: 'init',
+            img: 'init',
+            desc: 'init',
+            src: 'init'
         }
     ]
 }

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { SET_DEFAULT_PROJECTS } from '../types/types'
+import {errorProjects} from '../interfaces'
 //import {networkInterfaces} from 'os'
 
 export function getProjects() {
@@ -14,5 +15,6 @@ export function getProjects() {
         .then(projects => {
             console.log(projects, 'projects')
             dispatch({ type: SET_DEFAULT_PROJECTS, payload: projects })
-        });
+        })
+        .catch(error => dispatch({ type: SET_DEFAULT_PROJECTS, payload: errorProjects }));
 }

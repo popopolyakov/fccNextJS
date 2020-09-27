@@ -1,20 +1,19 @@
 import projectsStyle from '../styles/portfolioProjects.module.sass'
 import { NextPage } from "next";
-import { IState, IProjects } from "../redux/interfaces";
+import { IState, IProductsArray } from "../redux/interfaces";
 import { useState } from 'react';
 
 interface IPropsPortfolioProjects {
-    projects: IProjects
+    projects: IProductsArray
 }
 const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
-    let [stateProjects, setStateProjects] = useState<IProjects>(props.projects)
-    console.log(stateProjects)
+    console.log(props.projects, 'props.projects is not iterable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return (
         <section id={projectsStyle.projects}>
             <h3 className={projectsStyle.projects__title}>Projects</h3>
 
             <div className={projectsStyle.projects__container}>
-                {stateProjects.map(project => (
+                {[...props.projects].map(project => (
                     <div key={project.id} className={projectsStyle.projects__project}>
                         <div className={projectsStyle.projects__project__image}>
                             <img src={project.img} />

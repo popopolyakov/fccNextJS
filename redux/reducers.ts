@@ -14,7 +14,7 @@ export const reducer = (
             if (action.payload.projects === "init") delete action.payload.projects;
             return { ...state, ...action.payload };
         case SET_DEFAULT_PROJECTS:
-            return { ...state, projects: action.payload};
+            return { ...state, projects: [...action.payload]};
         default:
             return state;
     }
