@@ -1,14 +1,15 @@
 import { wrapper } from '../redux/store'
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { State } from "../redux/reducers";
+import { IState } from "../redux/interfaces";
 import styles from '../styles/index.module.sass'
 import Projects from '../components/portfolioProjects'
 import { GetStaticProps } from 'next'
 import { getProjects } from '../redux/actions/getProjects';
 
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
-  const { app, page, projects } = useSelector<State, State>(state => state);
+  const { app, page, projects } = useSelector<IState, IState>(state => state);
+  console.log(projects)
   return (
     
     <div className={styles.container}>
@@ -30,8 +31,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
           <p><br />by Mikhail Polyakov</p>
         </div>
       </section>
-      <pre>{JSON.stringify({ app, page, projects }, null, 2)}</pre>
-      <Projects />
+      <Projects projects={projects} />
     </main>
     <footer id={styles.footer}>
         <div className={styles['footer-container']}>

@@ -1,40 +1,23 @@
 import { AnyAction } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
-import { getProjects } from '../redux/actions/getProjects'
-import {SET_DEFAULT_PROJECTS} from '../redux/types/types'
+import { SET_DEFAULT_PROJECTS } from '../redux/types/types'
+import {IState} from '../redux/interfaces'
 
-interface Product {
-    id: number | string;
-    title: string;
-    img: string;
-    desc: string;
-}
-
-interface Projects {
-    [index: number]: Product
-}
-
-export interface State {
-    app: string;
-    page: string;
-    projects: string | Projects;
-}
-
-const initialState: State = {
+export const initialState: IState = {
     app: "init",
     page: "init",
     projects: [
         {
             id: 1,
-            title: 'string',
-            img: 'string',
-            desc: 'string'
+            title: 'init',
+            img: 'init',
+            desc: 'init'
         }
     ]
 }
-  
+
 export const reducer = (
-    state : State = initialState,
+    state : IState = initialState,
     action: AnyAction
 ) => {
     switch (action.type) {
