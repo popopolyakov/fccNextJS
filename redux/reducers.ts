@@ -1,20 +1,7 @@
 import { AnyAction } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import { SET_DEFAULT_PROJECTS } from '../redux/types/types'
-import {IState} from '../redux/interfaces'
-
-export const initialState: IState = {
-    app: "init",
-    page: "init",
-    projects: [
-        {
-            id: 1,
-            title: 'init',
-            img: 'init',
-            desc: 'init'
-        }
-    ]
-}
+import { IState, initialState } from '../redux/interfaces'
 
 export const reducer = (
     state : IState = initialState,
