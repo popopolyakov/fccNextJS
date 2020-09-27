@@ -10,7 +10,7 @@
     {
       "id": 2,
       "title": "OmenNuxt",
-      "desc": "Проба Nuxt/Vue. Интересны были анимации в меню и рендер большого количества точек c ThreeJS.",
+      "desc": "Проба Vue/Nuxt. Интересны были анимации в меню и рендер большого количества точек c ThreeJS.",
       "img": "https://nuxtjs.org/logos/nuxt-square.svg",
       "src": "http://www.omennuxt.herokuapp.ru"
     },
@@ -37,14 +37,14 @@
     },
     {
       "id": 6,
-      "title": "Связь с GitHubAPI",
+      "title": "Связь с GitHubAPI и React",
       "desc": "Работа через React с GitHubAPI, пагинация и поиск",
       "img": "http://pngimg.com/uploads/github/github_PNG40.png",
       "src": "https://github.com/popopolyakov/reactGithubApi"
     },
     {
       "id": 7,
-      "title": "FreeCodeCamp 5",
+      "title": "Портфолио на котором вы сейчас",
       "desc": "Портфолио",
       "img": "http://techrocks.ru/wp-content/uploads/2017/12/fcc.png",
       "src": "https://github.com/popopolyakov/fccNextJS"

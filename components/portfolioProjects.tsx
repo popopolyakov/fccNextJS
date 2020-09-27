@@ -16,7 +16,9 @@ const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
                 {[...props.projects].map(project => (
                     <div key={project.id} className={projectsStyle.projects__project}>
                         <div className={projectsStyle.projects__project__image}>
-                            <img src={project.img} />
+                            <a href={project.src}>
+                                <img src={project.img} />
+                            </a>
                         </div>
                         <div className={projectsStyle.projects__project__title}>
                             <a href={project.src}>
