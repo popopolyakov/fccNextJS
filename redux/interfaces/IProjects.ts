@@ -1,5 +1,20 @@
-{
-  "projects": [
+
+export interface IProduct {
+    id: number | string;
+    title: string;
+    img: string;
+    desc: string;
+    src: string;
+}
+
+
+export interface IProductsArray extends Array<IProduct> {}
+
+
+
+
+// Заглушка для Vercel
+export const errorProjects: IProductsArray = [
     {
       "id": 1,
       "title": "ИЭЭ",
@@ -57,4 +72,3 @@
         "src": "https://github.com/popopolyakov/tableProductsVue"
       }
   ]
-}

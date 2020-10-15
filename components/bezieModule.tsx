@@ -1,13 +1,11 @@
 import projectsStyle from '../styles/portfolioProjects.module.sass'
 import { NextPage } from "next";
-import { IState } from "../redux/interfaces";
-import { IProductsArray } from '../redux/interfaces/IProjects'
+import { IState, IProductsArray } from "../redux/interfaces";
 import { useState } from 'react';
 
 interface IPropsPortfolioProjects {
     projects: IProductsArray
 }
-
 const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
     console.log(props.projects, 'props.projects is not iterable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return (
@@ -39,10 +37,6 @@ const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
     )
 }
 
-/* export const getStaticProps = wrapper.getStaticProps(({ store }) => {
-    store.dispatch({ type: "SET_PROJECTS", payload: "static" });
-    console.log('getStaticProps')
-    return { props: { getStaticProp: "bar" } };
-}); */
+
 
 export default Projects

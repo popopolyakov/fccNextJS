@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { SET_DEFAULT_PROJECTS } from '../types/types'
-import {errorProjects} from '../interfaces'
+import {errorProjects} from '../interfaces/IProjects'
 //import {networkInterfaces} from 'os'
 
 export function getProjects() {
