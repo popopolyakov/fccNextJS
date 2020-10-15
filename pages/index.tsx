@@ -6,10 +6,15 @@ import styles from '../styles/index.module.sass'
 import Projects from '../components/portfolioProjects'
 import { GetStaticProps } from 'next'
 import { getProjects } from '../redux/actions/getProjects';
+import { useRef } from 'react';
 
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   const { app, page, projects } = useSelector<IState, IState>(state => state);
-  console.log(projects)
+  const refProjects : React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null)
+  console.log(refProjects.current)
+
+  
+
   return (
     
     <div className={styles.container}>
@@ -20,7 +25,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
             <img className={styles.logo} src="https://sun9-9.userapi.com/c629113/v629113605/29f70/RvnkHfFYJlk.jpg" /></div>
           <nav id={styles.navbar}>
             <a className={styles['nav-link']} href="https://github.com/popopolyakov" target="_blank">My github</a>
-            <a className={styles['nav-link']} href="#projects">Projects</a>
+            <a className={styles['nav-link']} onClick={(e) => window.scrollTo({top: refProjects.current.offsetTop - 80, behavior: "smooth"})}>Projects</a>
           </nav>
         </div>
     </header>
@@ -31,7 +36,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
           <p><br />by Mikhail Polyakov</p>
         </div>
       </section>
-      <Projects projects={projects} />
+        <Projects projects={projects} refProjects={refProjects}/>
     </main>
     <footer id={styles.footer}>
         <div className={styles['footer-container']}>

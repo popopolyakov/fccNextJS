@@ -5,13 +5,14 @@ import { IProductsArray } from '../redux/interfaces/IProjects'
 import { useState } from 'react';
 
 interface IPropsPortfolioProjects {
-    projects: IProductsArray
+    projects: IProductsArray,
+    refProjects: React.RefObject<any>
 }
 
 const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
     console.log(props.projects, 'props.projects is not iterable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return (
-        <section id={projectsStyle.projects}>
+        <section id={projectsStyle.projects} ref={props.refProjects}>
             <h3 className={projectsStyle.projects__title}>Projects</h3>
 
             <div className={projectsStyle.projects__container}>
