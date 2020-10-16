@@ -6,7 +6,8 @@ import styles from '../styles/index.module.sass'
 import Projects from '../components/portfolioProjects'
 import { GetStaticProps } from 'next'
 import { getProjects } from '../redux/actions/getProjects';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
+import Link from 'next/link'
 
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   const { app, page, projects } = useSelector<IState, IState>(state => state);
@@ -41,6 +42,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
     <footer id={styles.footer}>
         <div className={styles['footer-container']}>
             <a id={styles['profile-link']} href="https://github.com/popopolyakov" target="_blank">My github</a>
+            
             <p>@popopolyakov</p>
         </div>
     </footer>

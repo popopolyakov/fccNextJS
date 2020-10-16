@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { IState } from "../redux/interfaces";
 import { IProductsArray } from '../redux/interfaces/IProjects'
 import { useState } from 'react';
+import Link from 'next/link'
 
 interface IPropsPortfolioProjects {
     projects: IProductsArray,
@@ -24,9 +25,19 @@ const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
                             </a>
                         </div>
                         <div className={projectsStyle.projects__project__title}>
-                            <a href={project.src}>
-                                {project.title}
-                            </a>
+                            {project.outerLink === 'true' ? (
+                                    <a href={project.src}>
+                                        {project.title}
+                                    </a>
+                                ) : (
+                                    <Link href={project.src}>
+                                        <a href={project.src}>
+                                            {project.title}
+                                        </a>
+                                    </Link> 
+                                )
+                            }
+                            
                         </div>
                         
                         <div className={projectsStyle.projects__project__description}>
