@@ -31,7 +31,7 @@ const Projects: NextPage<any> = (props: IPropsPortfolioProjects) => {
                                     </a>
                                 ) : (
                                     <Link href={project.src}>
-                                        <a href={project.src}>
+                                        <a>
                                             {project.title}
                                         </a>
                                     </Link> 

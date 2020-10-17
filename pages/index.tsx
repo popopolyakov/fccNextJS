@@ -10,7 +10,8 @@ import React, { useRef } from 'react';
 import Link from 'next/link'
 
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
-  const { app, page, projects } = useSelector<IState, IState>(state => state);
+  const { app, page, projects } = useSelector<IState, IState>((state: IState) => state);
+  console.log(projects)
   const refProjects : React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null)
   console.log(refProjects.current)
 
@@ -37,7 +38,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
           <p><br />by Mikhail Polyakov</p>
         </div>
       </section>
-        <Projects projects={projects} refProjects={refProjects}/>
+        {projects instanceof Array ? <Projects projects={projects} refProjects={refProjects}/> : 'Загрузка'}
     </main>
     <footer id={styles.footer}>
         <div className={styles['footer-container']}>
@@ -56,5 +57,6 @@ export default Home
 export const  getStaticProps : GetStaticProps =  wrapper.getStaticProps(async ({ store }) => {
   console.log(store.dispatch)
   await store.dispatch<any>(getProjects())
+  console.log(store.getState())
   return { props: { store: store.getState() } };
 });

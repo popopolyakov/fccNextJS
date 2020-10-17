@@ -3,17 +3,19 @@ import { NextPage } from "next";
 import { IState } from "../redux/interfaces";
 import { useState } from 'react';
 
-const Projects: NextPage<any> = (props: any) => {
+const ManageBezieContainer: NextPage<any> = (props: any) => {
     
+    
+
     return (
-        <section id={projectsStyle.projects}>
-            
-        </section>
+        <>
+            <svg className="drawPlace" width="100vw" height="100vh"  version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+        </>
     )
 }
 
 
 
-export default Projects
+export default ManageBezieContainer
 
 // ЗАМЕНИТЬ INTERFACE PROPS'OB

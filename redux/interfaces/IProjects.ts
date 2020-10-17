@@ -5,7 +5,7 @@ export interface IProduct {
     img: string;
     desc: string;
     src: string;
-    outerLink: string
+    outerLink: boolean | string
 }
 
 
