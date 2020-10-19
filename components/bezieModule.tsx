@@ -7,7 +7,9 @@ import { IDots } from '../redux/interfaces/IBezie';
 
     
 interface IPropsBezieModule {
-    dots: IDots 
+    dots: IDots,
+    mouseDownEvent: Function,
+    mouseUpEvent: Function
 }
 
 const ManageBezieContainer: NextPage<any> = (props: IPropsBezieModule) => {
@@ -17,7 +19,15 @@ const ManageBezieContainer: NextPage<any> = (props: IPropsBezieModule) => {
 
 
     return (
-        <svg className="drawPlace" width="100vw" height="100vh" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            className="drawPlace"
+            width="100vw"
+            height="100vh"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            onMouseDown={(e) => props.mouseDownEvent(e)}
+            onMouseUp={(e) => props.mouseUpEvent(e)}
+        >
             {props.dots.map((item, i) => (
                 <circle
                     cx={item.x}
@@ -26,6 +36,7 @@ const ManageBezieContainer: NextPage<any> = (props: IPropsBezieModule) => {
                     stroke='grey'
                     fill='transparent'
                     strokeWidth="2"
+                    key={i}
                 />))}
         </svg>
     )

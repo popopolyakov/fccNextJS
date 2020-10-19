@@ -5,7 +5,7 @@ export interface IDot {
 
 export interface IBezieLine {
     position: IDot,
-    direction: IDot
+    direction?: IDot
 }
 
 export const initialBezie = []
