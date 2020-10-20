@@ -7,14 +7,13 @@ import ManageBezieContainer from '../../components/bezieModule'
 import { GetStaticProps } from 'next'
 import { useRef, useState } from 'react';
 import { getBezieDots } from '../../redux/actions/getBezieDots';
-import { IBezieLine } from '../../redux/interfaces/IBezie';
+import { IBezieLine, IBezieLines, IDot, IDots } from '../../redux/interfaces/IBezie';
 
 
 enum StageBezie {
-  start = 'START',
-  first = 'FIRST',
+  first = 'START',
   second = 'SECOND',
-  manyDots = 'MANYDOTS'
+  manyDots = 'MANYDOTS',
 }
 
 
@@ -24,38 +23,109 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
 
   const initialDots = bezieDots.map(item => item.position.x)
 
+  let [dots, setDots] = useState<IDots>([])
+  
+  let [stageBezie, setStageBezie] = useState<StageBezie>(StageBezie.first)
+  let [lines, setLines] = useState<IBezieLines>([])
+  let [visibilityPhantomLine, setVisibilityPhantomLine] = useState<boolean>(false)
 
-  function placePositionDot(screenX : number, screenY : number) {
-    bezieDots.push({ position: { x: screenX, y: screenY } })
+
+  function placePositionDot(clientX : number, clientY : number) : void {
+    bezieDots.push({
+      position: { x: clientX, y: clientY }
+    })
     setDots([...dots, bezieDots[bezieDots.length-1].position])
   }
 
-  let [dots, setDots] = useState<any>([])
-  
-  let [stageBezie, setStageBezie] = useState<StageBezie>(StageBezie.start)
+  function placeDirectionDot(clientX: number, clientY: number, curElem : IBezieLine = bezieDots[bezieDots.length - 1]) : void {
+    bezieDots[bezieDots.length - 1] = {
+      ...curElem,
+      direction: {
+        x: clientX,
+        y: clientY
+      }
+    }
+    setDots([...dots, bezieDots[bezieDots.length-1].direction])
+  }
+
+  function replacePhantomLine(clientX : number, clientY : number): void {
+    
+  }
+
+  function createLine(start: IDot, end: IDot): void {
+    console.log([
+      ...lines,
+      {
+        position: {
+          x: start.x,
+          y: start.y
+        }, 
+        direction: {
+          x: end.x,
+          y: end.y
+        }
+      }
+    ], 'ожидаемый');
+    
+    setLines([
+      ...lines,
+      {
+        position: {
+          x: start.x,
+          y: start.y
+        }, 
+        direction: {
+          x: end.x,
+          y: end.y
+        }
+      }
+    ])
+    
+    
+  }
+
 
 
   function mouseDownEvent(e: React.MouseEvent<SVGElement>) {
     e.persist()
-    if (stageBezie === StageBezie.start) {
+    if (stageBezie === StageBezie.first) {
       placePositionDot(e.clientX, e.clientY)
-      setStageBezie(StageBezie.first)
-    } else if (stageBezie === StageBezie.first) {
+    } else if (stageBezie === StageBezie.second) {
+      placePositionDot(e.clientX, e.clientY)
+    }
+    setVisibilityPhantomLine(true)
+  }
+
+  function mouseUpEvent(e: React.MouseEvent<SVGElement>) {
+    e.persist()
+    if (stageBezie === StageBezie.first) {
+      placeDirectionDot(e.clientX, e.clientY)
+      console.log(bezieDots)
       
+      setStageBezie(StageBezie.second)
+    } else if (stageBezie === StageBezie.second) {
+      placeDirectionDot(e.clientX, e.clientY)
+      setStageBezie(StageBezie.manyDots)
+    }
+    console.log(bezieDots[bezieDots.length - 1].position, bezieDots[bezieDots.length - 1].direction);
+    
+    createLine(bezieDots[bezieDots.length - 1].position, bezieDots[bezieDots.length - 1].direction)
+    console.log(lines, 'фактический');
+    setVisibilityPhantomLine(false)
+  }
+
+  function mouseMoveEvent(e : React.MouseEvent<SVGElement>) {
+    e.persist()
+    if (visibilityPhantomLine === true) {
+      replacePhantomLine(e.clientX, e.clientY)
     }
   }
 
-  function mouseUpEvent(e : React.MouseEvent<SVGElement>) {
-    e.persist()
-    
-  }
-
-  console.log()
 
   return (
     
 
-    <ManageBezieContainer dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent}/>
+    <ManageBezieContainer lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
 
 
   )
