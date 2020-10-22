@@ -12,4 +12,4 @@ export const initialBezie = []
 
 export interface IBezieLines extends Array<IBezieLine> { }
 
-export interface IDots extends Array<IDot> {}
+export interface IDots extends Array<IDot> { }

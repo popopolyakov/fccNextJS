@@ -1,8 +1,8 @@
 import projectsStyle from '../styles/portfolioProjects.module.sass'
 import { NextPage } from "next";
 import { IState } from "../redux/interfaces";
-import { useState } from 'react';
-import { IBezieLine, IBezieLines, IDots } from '../redux/interfaces/IBezie';
+import { useRef, useState } from 'react';
+import { IBezieLine, IBezieLines, IDot, IDots } from '../redux/interfaces/IBezie';
 
 
     
@@ -11,13 +11,73 @@ interface IPropsBezieModule {
     mouseDownEvent: Function,
     mouseUpEvent: Function,
     mouseMoveEvent: Function,
-    lines : IBezieLines
+    lines: IBezieLines,
+    lastPosition : IDot | null,
+    lastDirection : IDot | null
 }
 
 const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieModule) => {
+    const path = useRef<SVGPathElement>(null);
 
-
-
+    let routeOfPath = (dots: IBezieLines, finalPosition: IDot | null, finalDirection: IDot | null): string => {
+        console.log(finalDirection, finalPosition);
+        
+        console.log(finalDirection === null || finalPosition === null, 'check coords');
+        console.log(dots.length !== 0, 'check dots');
+        
+        
+        
+        console.log((finalDirection === null || finalPosition === null) && dots.length > 0);
+        let takeFinalLineFromDots : boolean = false
+        if ((finalDirection === null && finalPosition === null) && dots.length !== 0) {
+            console.log(finalPosition, finalDirection, dots);
+            console.log([...dots].pop());
+            console.log(dots[dots.length-1]);
+            
+            let { position, direction } = dots.pop()
+            finalPosition = position
+            finalDirection = direction
+            console.log(finalPosition, finalDirection, dots)
+            takeFinalLineFromDots = true
+        }
+        /*
+        ==================
+            Код из моего репозитория bezieDrawing
+        ==================      
+        */
+        let partOfPath = new Array()
+        if (finalDirection !== null && finalPosition!== null) {
+            partOfPath = dots.map((item, i) => {
+                if (dots.length === 1) {
+                    const animPartOfBezie = `${finalDirection.x} ${finalDirection.y}, ${finalPosition.x} ${finalPosition.y}`
+                    return  ` M ${item.position.x} ${item.position.y} C ${item.direction.x} ${item.direction.y}, ` + animPartOfBezie
+                } else if (dots.length === 2) {
+                    const animPartOfBezie = ` S ${finalDirection.x} ${finalDirection.y}, ${finalPosition.x} ${finalPosition.y}`
+                    if (i === 0) {
+                        return  ` M ${item.position.x} ${item.position.y} C ${item.direction.x} ${item.direction.y}`
+                    } else {
+                        return ` ${item.direction.x} ${item.direction.y}, ${item.position.x} ${item.position.y}` + animPartOfBezie
+                    } 
+                } else {
+                    const animPartOfBezie = `S ${finalDirection.x} ${finalDirection.y}, ${finalPosition.x} ${finalPosition.y}`
+                    if (i === 0) {
+                        return  ` M ${item.position.x} ${item.position.y} C ${item.direction.x} ${item.direction.y}, `
+                    } else if (i === 1) {
+                        return `${item.direction.x} ${item.direction.y}, ${item.position.x} ${item.position.y} `
+                    } else if (i === dots.length-1) {
+                        return `S ${item.direction.x} ${item.direction.y}, ${item.position.x} ${item.position.y} ` + animPartOfBezie
+                    } else {
+                        return `S ${item.direction.x} ${item.direction.y}, ${item.position.x} ${item.position.y} `
+                    }
+                }
+            })
+            
+        }
+        if (takeFinalLineFromDots) {
+            dots.push({position: finalPosition, direction: finalDirection})
+        }
+        return partOfPath.join('')
+    }
 
 
     return (
@@ -52,6 +112,7 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
                     key={i}
                 />)
             )}
+            <path ref={path} d={routeOfPath(props.lines, props.lastPosition, props.lastDirection)} style={{stroke: 'blue', fill: 'transparent'}}/>
 
         </svg>
     )

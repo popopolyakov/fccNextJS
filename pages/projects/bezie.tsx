@@ -21,12 +21,14 @@ enum StageBezie {
 const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   const { app, page, bezieDots } = useSelector<IState, IState>(state => state);
 
-  const initialDots = bezieDots.map(item => item.position.x)
+  // const initialDots = bezieDots.map(item => item.position.x)
 
   let [dots, setDots] = useState<IDots>([])
   
   let [stageBezie, setStageBezie] = useState<StageBezie>(StageBezie.first)
   let [lines, setLines] = useState<IBezieLines>([])
+  let [lastDirection, setLastDirection] = useState<IDot | null>(null)
+  let [lastPosition, setLastPosition] = useState<IDot | null>(null)
   let [visibilityPhantomLine, setVisibilityPhantomLine] = useState<boolean>(false)
 
 
@@ -53,19 +55,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   }
 
   function createLine(start: IDot, end: IDot): void {
-    console.log([
-      ...lines,
-      {
-        position: {
-          x: start.x,
-          y: start.y
-        }, 
-        direction: {
-          x: end.x,
-          y: end.y
-        }
-      }
-    ], 'ожидаемый');
+    console.log(lines);
     
     setLines([
       ...lines,
@@ -88,29 +78,29 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
 
   function mouseDownEvent(e: React.MouseEvent<SVGElement>) {
     e.persist()
-    if (stageBezie === StageBezie.first) {
-      placePositionDot(e.clientX, e.clientY)
-    } else if (stageBezie === StageBezie.second) {
-      placePositionDot(e.clientX, e.clientY)
-    }
+
+    placePositionDot(e.clientX, e.clientY)
+
+    setLastPosition({
+      x: e.clientX,
+      y: e.clientY
+    })
     setVisibilityPhantomLine(true)
   }
 
   function mouseUpEvent(e: React.MouseEvent<SVGElement>) {
     e.persist()
-    if (stageBezie === StageBezie.first) {
-      placeDirectionDot(e.clientX, e.clientY)
-      console.log(bezieDots)
-      
-      setStageBezie(StageBezie.second)
-    } else if (stageBezie === StageBezie.second) {
-      placeDirectionDot(e.clientX, e.clientY)
-      setStageBezie(StageBezie.manyDots)
+    placeDirectionDot(e.clientX, e.clientY)
+    console.log(lastPosition, lastDirection);
+    
+    if (lastPosition !== null && lastDirection !== null) {
+      setLastPosition(null)
+      setLastDirection(null)
     }
-    console.log(bezieDots[bezieDots.length - 1].position, bezieDots[bezieDots.length - 1].direction);
+
     
     createLine(bezieDots[bezieDots.length - 1].position, bezieDots[bezieDots.length - 1].direction)
-    console.log(lines, 'фактический');
+
     setVisibilityPhantomLine(false)
   }
 
@@ -118,6 +108,10 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
     e.persist()
     if (visibilityPhantomLine === true) {
       replacePhantomLine(e.clientX, e.clientY)
+      setLastDirection({
+        x: e.clientX,
+        y: e.clientY
+      })
     }
   }
 
@@ -125,7 +119,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   return (
     
 
-    <ManageBezieContainer lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+    <ManageBezieContainer lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
 
 
   )
