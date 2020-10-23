@@ -13,7 +13,8 @@ interface IPropsBezieModule {
     mouseMoveEvent: Function,
     lines: IBezieLines,
     lastPosition : IDot | null,
-    lastDirection : IDot | null
+    lastDirection: IDot | null,
+    coordPhantomLine : IBezieLine | null
 }
 
 const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieModule) => {
@@ -113,7 +114,14 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
                 />)
             )}
             <path ref={path} d={routeOfPath(props.lines, props.lastPosition, props.lastDirection)} style={{stroke: 'blue', fill: 'transparent'}}/>
-
+            {(props.coordPhantomLine !== null) ? (
+                <line
+                    x1={props.coordPhantomLine.position.x}
+                    y1={props.coordPhantomLine.position.y}
+                    x2={props.coordPhantomLine.direction.x}
+                    y2={props.coordPhantomLine.direction.y}
+                    stroke="black"
+                />) : <></>}
         </svg>
     )
 }

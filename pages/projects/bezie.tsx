@@ -30,6 +30,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   let [lastDirection, setLastDirection] = useState<IDot | null>(null)
   let [lastPosition, setLastPosition] = useState<IDot | null>(null)
   let [visibilityPhantomLine, setVisibilityPhantomLine] = useState<boolean>(false)
+  let [coordPhantomLine, setCoordPhantomLine] = useState<IBezieLine | null>(null)
 
 
   function placePositionDot(clientX : number, clientY : number) : void {
@@ -51,7 +52,16 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   }
 
   function replacePhantomLine(clientX : number, clientY : number): void {
-    
+    setCoordPhantomLine({
+      position: {
+        x: dots[dots.length - 1].x,
+        y: dots[dots.length - 1].y
+      },
+      direction: {
+        x: clientX,
+        y: clientY
+      }
+    })
   }
 
   function createLine(start: IDot, end: IDot): void {
@@ -98,9 +108,9 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
       setLastDirection(null)
     }
 
-    
+    setCoordPhantomLine(null)
     createLine(bezieDots[bezieDots.length - 1].position, bezieDots[bezieDots.length - 1].direction)
-
+    
     setVisibilityPhantomLine(false)
   }
 
@@ -119,7 +129,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   return (
     
 
-    <ManageBezieContainer lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+    <ManageBezieContainer coordPhantomLine={coordPhantomLine}lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
 
 
   )
