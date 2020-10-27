@@ -51,6 +51,18 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
     setDots([...dots, bezieDots[bezieDots.length-1].direction])
   }
 
+  function placeClickDot(clientX : number, clientY : number) : void {
+    bezieDots.push({
+      position: { x: clientX, y: clientY },
+      direction: {
+        x: clientX,
+        y: clientY
+      }
+    })
+    setDots([...dots, bezieDots[bezieDots.length-1]])
+  }
+
+
   function replacePhantomLine(clientX : number, clientY : number): void {
     setCoordPhantomLine({
       position: {
@@ -124,12 +136,18 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
       })
     }
   }
-
+  function mouseClcikEvent(e : React.MouseEvent<SVGElement>) {
+    e.persist()
+    console.log(e.clientX, e.clientY);
+    
+    placePositionDot(e.clientX, e.clientY)
+    placeClickDot(e.clientX, e.clientY)
+  }
 
   return (
     
 
-    <ManageBezieContainer coordPhantomLine={coordPhantomLine}lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+    <ManageBezieContainer mouseClickEvent={mouseClcikEvent} coordPhantomLine={coordPhantomLine}lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
 
 
   )

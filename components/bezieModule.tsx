@@ -11,6 +11,7 @@ interface IPropsBezieModule {
     mouseDownEvent: Function,
     mouseUpEvent: Function,
     mouseMoveEvent: Function,
+    mouseClickEvent: Function,
     lines: IBezieLines,
     lastPosition : IDot | null,
     lastDirection: IDot | null,
@@ -30,7 +31,7 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
         
         console.log((finalDirection === null || finalPosition === null) && dots.length > 0);
         let takeFinalLineFromDots : boolean = false
-        if ((finalDirection === null && finalPosition === null) && dots.length !== 0) {
+        if ((finalDirection === null || finalPosition === null) && dots.length !== 0) {
             console.log(finalPosition, finalDirection, dots);
             console.log([...dots].pop());
             console.log(dots[dots.length-1]);
@@ -41,6 +42,8 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
             console.log(finalPosition, finalDirection, dots)
             takeFinalLineFromDots = true
         }
+        console.log(dots,finalDirection, finalPosition, 'onClick');
+        
         /*
         ==================
             Код из моего репозитория bezieDrawing
@@ -91,6 +94,7 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
             onMouseDown={(e) => props.mouseDownEvent(e)}
             onMouseUp={(e) => props.mouseUpEvent(e)}
             onMouseMove={(e) => props.mouseMoveEvent(e)}
+            onClick={(e) => props.mouseClickEvent(e)}
         >
             {props.dots.map((item, i) => (
                 <circle
