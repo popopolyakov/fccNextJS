@@ -3,9 +3,9 @@ import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import { IState } from "../../redux/interfaces";
 import styles from '../../styles/index.module.sass'
-import ManageBezieContainer from '../../components/bezieModule'
+import DrawBezieContainer from '../../components/bezie/bezieModule'
 import { GetStaticProps } from 'next'
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { getBezieDots } from '../../redux/actions/getBezieDots';
 import { IBezieLine, IBezieLines, IDot, IDots } from '../../redux/interfaces/IBezie';
 
@@ -147,7 +147,7 @@ const Home: NextPage<any> = ({ appProp, getStaticProp }) => {
   return (
     
 
-    <ManageBezieContainer mouseClickEvent={mouseClcikEvent} coordPhantomLine={coordPhantomLine}lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
+    <DrawBezieContainer mouseClickEvent={mouseClcikEvent} coordPhantomLine={coordPhantomLine}lastPosition={lastPosition} lastDirection={lastDirection} lines={lines} dots={dots} mouseDownEvent={mouseDownEvent} mouseUpEvent={mouseUpEvent} mouseMoveEvent={mouseMoveEvent}/>
 
 
   )

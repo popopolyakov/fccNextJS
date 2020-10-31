@@ -1,8 +1,8 @@
 import projectsStyle from '../styles/portfolioProjects.module.sass'
 import { NextPage } from "next";
-import { IState } from "../redux/interfaces";
+import { IState } from "../../redux/interfaces";
 import { useRef, useState } from 'react';
-import { IBezieLine, IBezieLines, IDot, IDots } from '../redux/interfaces/IBezie';
+import { IBezieLine, IBezieLines, IDot, IDots } from '../../redux/interfaces/IBezie';
 
 
     
@@ -18,28 +18,14 @@ interface IPropsBezieModule {
     coordPhantomLine : IBezieLine | null
 }
 
-const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieModule) => {
+const DrawBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieModule) => {
     const path = useRef<SVGPathElement>(null);
 
     let routeOfPath = (dots: IBezieLines, finalPosition: IDot | null, finalDirection: IDot | null): string => {
-        console.log(finalDirection, finalPosition);
         
-        console.log(finalDirection === null || finalPosition === null, 'check coords');
-        console.log(dots.length !== 0, 'check dots');
-        
-        
-        
-        console.log((finalDirection === null || finalPosition === null) && dots.length > 0);
         let takeFinalLineFromDots : boolean = false
         if ((finalDirection === null || finalPosition === null) && dots.length !== 0) {
-            console.log(finalPosition, finalDirection, dots);
-            console.log([...dots].pop());
-            console.log(dots[dots.length-1]);
-            
-            let { position, direction } = dots.pop()
-            finalPosition = position
-            finalDirection = direction
-            console.log(finalPosition, finalDirection, dots)
+            ({ position : finalPosition, direction :  finalDirection} = dots.pop())
             takeFinalLineFromDots = true
         }
         console.log(dots,finalDirection, finalPosition, 'onClick');
@@ -132,6 +118,4 @@ const ManageBezieContainer: NextPage<IPropsBezieModule> = (props: IPropsBezieMod
 
 
 
-export default ManageBezieContainer
-
-// ЗАМЕНИТЬ INTERFACE PROPS'OB
+export default DrawBezieContainer
